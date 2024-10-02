@@ -7,19 +7,21 @@ from sklearn.metrics import precision_score
 import matplotlib.pyplot as plt
 
 # Import data
-data = pd.read_csv("/breast_cancer.csv")
-print(data.head())
-print(data.info())
-print(data["diagnosis"].unique())
+data = pd.read_csv("dataset/breast_cancer.csv")
+# print(data.head())
+# print(data.info())
+# print(data["diagnosis"].unique())
 
 # Extract calssification target
 target = data.loc[:, "diagnosis"]
 # Convert the target variable to a binary representation (0 or 1)
 target = (target == "M").astype(int)
 # Extract all other columns except 'diagnosis' as predictors
-data_predictors = data.loc[:, data.columns != 'diagnosis']
+data_predictors = data.loc[:, ~data.columns.isin(['diagnosis', 'id'])]
 # Create a list of predictor names
 predictor_names = data_predictors.columns
+
+x_train, x_test, y_train, y_test = train_test_split(data_predictors, target, test_size=0.2,random_state=42)
 
 def generate_random_individuals(population_size, num_features, min_features, max_features):
     individuals = np.zeros((population_size, num_features))
@@ -63,7 +65,7 @@ def choose_parents(population,accuracy,elite_percent):
         parents_wo_elite[count,:] = population[indices, :]
         
     parents = np.concatenate((elite_population, parents_wo_elite), axis=0)  # Concatenate elite and parents_wo_elite to get all parents
-
+    return parents
 
 def one_point_crossover(parents,elite_percent,mutation_probability,min_features, max_features):
     elite_num = int(round(((elite_percent*population.shape[0]) // 2) * 2))
@@ -105,19 +107,19 @@ def one_point_crossover(parents,elite_percent,mutation_probability,min_features,
             np.sum(crossover_population[ind_row,:]) < max_features):
             crossover_population[ind_row,ind_col] = 1
         elif (crossover_population[ind_row,ind_col] == 1 and 
-              np.sum(crossover_population[ind_row,:]) >= min_features+1):
+                np.sum(crossover_population[ind_row,:]) >= min_features+1):
             crossover_population[ind_row,ind_col] = 0 
     
     return crossover_population 
 
 # Hyperparameters
 num_features = data_predictors.shape[1]
-min_features = 2            # minimal number of features in a subset of features
+min_features = 16           # minimal number of features in a subset of features
 population_size = 8         # size of population (number of instances)
 max_iterations = 8          # maximum number of iterations
 elite_percent = 0.4         # percentage of elite population which doesn't mutate
 mutation_probability = 0.2  # percentage of total genes that mutate
-max_features = 4            
+max_features = 24
 
 # Main loop - gen 0
 #1&2 generate population
@@ -146,12 +148,13 @@ while gen < max_iterations-1:
         accuracy_ind = train_model(x_train,x_test,y_train,y_test,predictor_names_ind)
         accuracy[ind] = accuracy_ind
     best_acc_i[gen] = max(accuracy)
-    
+
 ind_max_acc = np.argmax(accuracy)
 best_features = population[ind_max_acc,:]
 
 # Plots - Post-processing
 best_features_names = predictor_names[best_features==1]
+print(best_features_names)
 plt.plot(range(1, max_iterations + 1), best_acc_i)
 plt.xlabel('Number of generations')
 plt.ylabel('Best accuracy')

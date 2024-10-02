@@ -102,7 +102,7 @@ def feature_fusion(need, x_train, x_test, ae_train, ae_test):
     ae_train.columns = ae_train.columns.astype(str)
     ae_test.columns = ae_test.columns.astype(str)
 
-    fusion_train = x_train.merge(ae_train, how='left', left_index=True, right_index=True)
-    fusion_test = x_test.merge(ae_test, how='left', left_index=True, right_index=True)
+    fusion_train = pd.concat([x_train.reset_index(drop=True), ae_train.reset_index(drop=True)], axis=1)
+    fusion_test = pd.concat([x_test.reset_index(drop=True), ae_test.reset_index(drop=True)], axis=1)
 
     return fusion_train, fusion_test

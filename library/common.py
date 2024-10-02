@@ -28,6 +28,10 @@ from keras.utils import plot_model
 from keras import layers,regularizers
 from tensorflow.keras import backend as K
 from matplotlib import pyplot
+from library.ae import *
+from library.dae import *
+from library.sae import *
+from library.vae import *
 
 
 # 醫療領域
@@ -49,3 +53,106 @@ datasets = ['glass1', 'ecoli-0_vs_1', 'wisconsin', 'pima', 'iris0', 'glass0', 'y
             'yeast6', 'abalone19']
 
 set_size = 64
+
+
+def train_ae(ver, size, x_train, x_test):
+    if ver == 'ae_210':
+        x_train_encoded, x_test_encoded = train_ae_210(x_train, x_test, size)
+    elif ver == 'ae_220':
+        x_train_encoded, x_test_encoded = train_ae_220(x_train, x_test, size)
+    elif ver == 'ae_230':
+        x_train_encoded, x_test_encoded = train_ae_230(x_train, x_test, size)
+    elif ver == 'ae_240':
+        x_train_encoded, x_test_encoded = train_ae_240(x_train, x_test, size)
+    elif ver == 'ae_310':
+        x_train_encoded, x_test_encoded = train_ae_310(x_train, x_test, size)
+    elif ver == 'ae_320': 
+        x_train_encoded, x_test_encoded = train_ae_320(x_train, x_test, size)
+    elif ver == 'ae_330':
+        x_train_encoded, x_test_encoded = train_ae_330(x_train, x_test, size)
+    elif ver == 'ae_410':
+        x_train_encoded, x_test_encoded = train_ae_410(x_train, x_test, size)
+    elif ver == 'ae_420':
+        x_train_encoded, x_test_encoded = train_ae_420(x_train, x_test, size)
+    elif ver == 'ae_510':
+        x_train_encoded, x_test_encoded = train_ae_510(x_train, x_test, size)
+    elif ver == 'ae_610':
+        x_train_encoded, x_test_encoded = train_ae_610(x_train, x_test, size)
+    elif ver == 'ae_710':
+        x_train_encoded, x_test_encoded = train_ae_710(x_train, x_test, size)
+
+    if ver == 'dae_210':
+        x_train_encoded, x_test_encoded = train_dae_210(x_train, x_test, size)
+    elif ver == 'dae_220':
+        x_train_encoded, x_test_encoded = train_dae_220(x_train, x_test, size)
+    elif ver == 'dae_230':
+        x_train_encoded, x_test_encoded = train_dae_230(x_train, x_test, size)
+    elif ver == 'dae_240':
+        x_train_encoded, x_test_encoded = train_dae_240(x_train, x_test, size)
+    elif ver == 'dae_310':
+        x_train_encoded, x_test_encoded = train_dae_310(x_train, x_test, size)
+    elif ver == 'dae_320': 
+        x_train_encoded, x_test_encoded = train_dae_320(x_train, x_test, size)
+    elif ver == 'dae_330':
+        x_train_encoded, x_test_encoded = train_dae_330(x_train, x_test, size)
+    elif ver == 'dae_410':
+        x_train_encoded, x_test_encoded = train_dae_410(x_train, x_test, size)
+    elif ver == 'dae_420':
+        x_train_encoded, x_test_encoded = train_dae_420(x_train, x_test, size)
+    elif ver == 'dae_510':
+        x_train_encoded, x_test_encoded = train_dae_510(x_train, x_test, size)
+    elif ver == 'dae_610':
+        x_train_encoded, x_test_encoded = train_dae_610(x_train, x_test, size)
+    elif ver == 'dae_710':
+        x_train_encoded, x_test_encoded = train_dae_710(x_train, x_test, size)
+
+    if ver == 'sae_210':
+        x_train_encoded, x_test_encoded = train_sae_210(x_train, x_test, size)
+    elif ver == 'sae_220':
+        x_train_encoded, x_test_encoded = train_sae_220(x_train, x_test, size)
+    elif ver == 'sae_230':
+        x_train_encoded, x_test_encoded = train_sae_230(x_train, x_test, size)
+    elif ver == 'sae_240':
+        x_train_encoded, x_test_encoded = train_sae_240(x_train, x_test, size)
+    elif ver == 'sae_310':
+        x_train_encoded, x_test_encoded = train_sae_310(x_train, x_test, size)
+    elif ver == 'sae_320': 
+        x_train_encoded, x_test_encoded = train_sae_320(x_train, x_test, size)
+    elif ver == 'sae_330':
+        x_train_encoded, x_test_encoded = train_sae_330(x_train, x_test, size)
+    elif ver == 'sae_410':
+        x_train_encoded, x_test_encoded = train_sae_410(x_train, x_test, size)
+    elif ver == 'sae_420':
+        x_train_encoded, x_test_encoded = train_sae_420(x_train, x_test, size)
+    elif ver == 'sae_510':
+        x_train_encoded, x_test_encoded = train_sae_510(x_train, x_test, size)
+    elif ver == 'sae_610':
+        x_train_encoded, x_test_encoded = train_sae_610(x_train, x_test, size)
+    elif ver == 'sae_710':
+        x_train_encoded, x_test_encoded = train_sae_710(x_train, x_test, size)
+
+    if ver == 'vae_210':
+        x_train_encoded, x_test_encoded = train_vae_210(x_train, x_test, size)
+    elif ver == 'vae_220':
+        x_train_encoded, x_test_encoded = train_vae_220(x_train, x_test, size)
+    elif ver == 'vae_230':
+        x_train_encoded, x_test_encoded = train_vae_230(x_train, x_test, size)
+    elif ver == 'vae_240':
+        x_train_encoded, x_test_encoded = train_vae_240(x_train, x_test, size)
+    elif ver == 'vae_310':
+        x_train_encoded, x_test_encoded = train_vae_310(x_train, x_test, size)
+    elif ver == 'vae_320': 
+        x_train_encoded, x_test_encoded = train_vae_320(x_train, x_test, size)
+    elif ver == 'vae_330':
+        x_train_encoded, x_test_encoded = train_vae_330(x_train, x_test, size)
+    elif ver == 'vae_410':
+        x_train_encoded, x_test_encoded = train_vae_410(x_train, x_test, size)
+    elif ver == 'vae_420':
+        x_train_encoded, x_test_encoded = train_vae_420(x_train, x_test, size)
+    elif ver == 'vae_510':
+        x_train_encoded, x_test_encoded = train_vae_510(x_train, x_test, size)
+    elif ver == 'vae_610':
+        x_train_encoded, x_test_encoded = train_vae_610(x_train, x_test, size)
+    elif ver == 'vae_710':
+        x_train_encoded, x_test_encoded = train_vae_710(x_train, x_test, size)
+    return x_train_encoded, x_test_encoded

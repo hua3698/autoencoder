@@ -1,37 +1,8 @@
 from library.common import *
 from library.functions import *
-from library.ae import *
-
-def train_ae(ver, size, x_train, x_test):
-    if ver == 'ae_210':
-        x_train_encoded, x_test_encoded = train_ae_210(x_train, x_test, size)
-    elif ver == 'ae_220':
-        x_train_encoded, x_test_encoded = train_ae_220(x_train, x_test, size)
-    elif ver == 'ae_230':
-        x_train_encoded, x_test_encoded = train_ae_230(x_train, x_test, size)
-    elif ver == 'ae_240':
-        x_train_encoded, x_test_encoded = train_ae_240(x_train, x_test, size)
-    elif ver == 'ae_310':
-        x_train_encoded, x_test_encoded = train_ae_310(x_train, x_test, size)
-    elif ver == 'ae_320': 
-        x_train_encoded, x_test_encoded = train_ae_320(x_train, x_test, size)
-    elif ver == 'ae_330':
-        x_train_encoded, x_test_encoded = train_ae_330(x_train, x_test, size)
-    elif ver == 'ae_410':
-        x_train_encoded, x_test_encoded = train_ae_410(x_train, x_test, size)
-    elif ver == 'ae_420':
-        x_train_encoded, x_test_encoded = train_ae_420(x_train, x_test, size)
-    elif ver == 'ae_510':
-        x_train_encoded, x_test_encoded = train_ae_510(x_train, x_test, size)
-    elif ver == 'ae_610':
-        x_train_encoded, x_test_encoded = train_ae_610(x_train, x_test, size)
-    elif ver == 'ae_710':
-        x_train_encoded, x_test_encoded = train_ae_710(x_train, x_test, size)
-    return x_train_encoded, x_test_encoded
 
 model = 'svc'
-# ae_version = ['ae_210', 'ae_220', 'ae_230', 'ae_240']
-ae_version = ['ae_320']
+ae_version = ['ae_210', 'ae_220', 'ae_230', 'ae_240']
 result_file = 'test.csv'
 
 for i, ae_version in enumerate(ae_version):
