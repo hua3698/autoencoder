@@ -4,10 +4,11 @@ from library import *
 from sklearn.model_selection import KFold
 
 
-datasets = ['SPECTF', 'sonar', 'MUSK_Clean1']
+datasets = ['segmentationData']
+# datasets = ['segmentationData', 'madelon', 'secom', 'colon', 'leukemia', 'SMK_CAN_187']
 
 for idx, dataset in enumerate(datasets):
-
+    print(dataset)
     svm_auc = [];  knn_auc = []; cart_auc = []; mlp_auc = []; xgb_auc = []
     smote_svm_auc = [];  smote_knn_auc = []; smote_cart_auc = []; smote_mlp_auc = []; smote_xgb_auc = []
     cluster_svm_auc = []; cluster_knn_auc = []; cluster_cart_auc = []; cluster_mlp_auc = []; cluster_xgb_auc = []
@@ -20,6 +21,7 @@ for idx, dataset in enumerate(datasets):
     y = pd.Series(labelencoder.fit_transform(df['Class']))
 
     for fold, (train_index, test_index) in enumerate(kf.split(df), start=1):
+        print(fold)
 
         x_train, x_test = x.iloc[train_index], x.iloc[test_index]
         y_train, y_test = y.iloc[train_index], y.iloc[test_index]

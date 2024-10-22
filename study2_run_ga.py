@@ -86,35 +86,231 @@ def main():
     return best_ind
 
 
-def process_train_test(dataset, ae_version, times):
-
-    train_file = "{}/1ae_train_{}_{}.csv".format(dataset, ae_version, times)
-    test_file = "{}/1ae_test_{}_{}.csv".format(dataset, ae_version, times)
-    x_train = pd.read_csv('result/study2/feature/' + train_file, delimiter=',')
-    x_test = pd.read_csv('result/study2/feature/' + test_file, delimiter=',')
-
-    y_train_file = "{}/train_ans_{}_{}.csv".format(dataset, ae_version, times)
-    y_test_file = "{}/test_ans_{}_{}.csv".format(dataset, ae_version, times)
-    y_train = pd.read_csv('result/study2/feature/' + y_train_file , delimiter=',')
-    y_test = pd.read_csv('result/study2/feature/' + y_test_file , delimiter=',')
-
-    return x_train, x_test, y_train, y_test
-
 
 model = 'svc'
-ae_version = ['ae_210', 'ae_220', 'ae_230', 'ae_240']
-datasets = ['sonar', 'SPECTF', 'MUSK_Clean1']
+autoencoder = 'dae'
+ae_version = ['210', '220', '230', '240']
+datasets = ['SPECTF', 'sonar', 'MUSK_Clean1']
 
-ae = []
 
-for idx, dataset in enumerate(datasets):
-    for i, ae_version in enumerate(ae_version):
-        ae = []
-        ae_smote = []; ae_cluster = []; ae_smotenn = []
-        smote_ae = []; cluster_ae = []; smotenn_ae = []
+# for i, ae_version in enumerate(ae_version):
+#     for idx, dataset in enumerate(datasets):
+#         ae = []; ae_smote = []; ae_cluster = []; ae_smotenn = []
+#         smote_ae = []; cluster_ae = []; smotenn_ae = []
+
+#         for times in range(1, 6):
+
+            # # ae
+            # train_file = "{}/{}/1ae_train_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            # test_file = "{}/{}/1ae_test_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            # x_train = pd.read_csv('result/study2/feature/' + train_file, delimiter=',')
+            # x_test = pd.read_csv('result/study2/feature/' + test_file, delimiter=',')
+
+            # y_train_file = "{}/{}/train_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            # y_test_file = "{}/{}/test_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            # y_train = pd.read_csv('result/study2/feature/' + y_train_file , delimiter=',')
+            # y_test = pd.read_csv('result/study2/feature/' + y_test_file , delimiter=',')
+
+            # X = x_train.values
+            # y = y_train.values.ravel()
+
+            # toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_bool, n=X.shape[1])
+            # toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+            # best_individual = main()
+
+            # selected_indices = [index for index, value in enumerate(best_individual) if value == 1]
+            # x_train = x_train.iloc[:, selected_indices]
+            # x_test = x_test.iloc[:, selected_indices]
+
+            # auc1 = run_model(model, x_train, x_test, y_train, y_test)
+            # ae.append(auc1)
+
+            # # ae+smote 
+            # train_file = "{}/{}/2ae+smote_train_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            # test_file = "{}/{}/2ae+smote_test_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            # x_train = pd.read_csv('result/study2/feature/' + train_file, delimiter=',')
+            # x_test = pd.read_csv('result/study2/feature/' + test_file, delimiter=',')
+
+            # y_train_file = "{}/{}/2ae+smote_train_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            # y_test_file = "{}/{}/test_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            # y_train = pd.read_csv('result/study2/feature/' + y_train_file , delimiter=',')
+            # y_test = pd.read_csv('result/study2/feature/' + y_test_file , delimiter=',')
+
+            # X = x_train.values
+            # y = y_train.values.ravel()
+
+            # toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_bool, n=X.shape[1])
+            # toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+            # best_individual = main()
+
+            # selected_indices = [index for index, value in enumerate(best_individual) if value == 1]
+            # x_train = x_train.iloc[:, selected_indices]
+            # x_test = x_test.iloc[:, selected_indices]
+
+            # auc2 = run_model(model, x_train, x_test, y_train, y_test)
+            # ae_smote.append(auc2)
+
+        #     # ae+cluster
+        #     train_file = "{}/{}/3ae+cluster_train_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     test_file = "{}/{}/3ae+cluster_test_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     x_train = pd.read_csv('result/study2/feature/' + train_file, delimiter=',')
+        #     x_test = pd.read_csv('result/study2/feature/' + test_file, delimiter=',')
+
+        #     y_train_file = "{}/{}/3ae+cluster_train_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     y_test_file = "{}/{}/test_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     y_train = pd.read_csv('result/study2/feature/' + y_train_file , delimiter=',')
+        #     y_test = pd.read_csv('result/study2/feature/' + y_test_file , delimiter=',')
+
+        #     X = x_train.values
+        #     y = y_train.values.ravel()
+
+        #     toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_bool, n=X.shape[1])
+        #     toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+        #     best_individual = main()
+
+        #     selected_indices = [index for index, value in enumerate(best_individual) if value == 1]
+        #     x_train = x_train.iloc[:, selected_indices]
+        #     x_test = x_test.iloc[:, selected_indices]
+
+        #     auc3 = run_model(model, x_train, x_test, y_train, y_test)
+        #     ae_cluster.append(auc3)
+
+        #     # ae+smotenn
+        #     train_file = "{}/{}/4ae+smotenn_train_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     test_file = "{}/{}/4ae+smotenn_test_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     x_train = pd.read_csv('result/study2/feature/' + train_file, delimiter=',')
+        #     x_test = pd.read_csv('result/study2/feature/' + test_file, delimiter=',')
+
+        #     y_train_file = "{}/{}/4ae+smotenn_train_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     y_test_file = "{}/{}/test_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     y_train = pd.read_csv('result/study2/feature/' + y_train_file , delimiter=',')
+        #     y_test = pd.read_csv('result/study2/feature/' + y_test_file , delimiter=',')
+
+        #     X = x_train.values
+        #     y = y_train.values.ravel()
+
+        #     toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_bool, n=X.shape[1])
+        #     toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+        #     best_individual = main()
+
+        #     selected_indices = [index for index, value in enumerate(best_individual) if value == 1]
+        #     x_train = x_train.iloc[:, selected_indices]
+        #     x_test = x_test.iloc[:, selected_indices]
+
+        #     auc4 = run_model(model, x_train, x_test, y_train, y_test)
+        #     ae_smotenn.append(auc4)
+
+        #     # smote+ae 
+        #     train_file = "{}/{}/5smote+ae_train_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     test_file = "{}/{}/5smote+ae_test_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     x_train = pd.read_csv('result/study2/feature/' + train_file, delimiter=',')
+        #     x_test = pd.read_csv('result/study2/feature/' + test_file, delimiter=',')
+
+        #     y_train_file = "{}/{}/5smote+ae_train_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     y_test_file = "{}/{}/test_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     y_train = pd.read_csv('result/study2/feature/' + y_train_file , delimiter=',')
+        #     y_test = pd.read_csv('result/study2/feature/' + y_test_file , delimiter=',')
+
+        #     X = x_train.values
+        #     y = y_train.values.ravel()
+
+        #     toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_bool, n=X.shape[1])
+        #     toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+        #     best_individual = main()
+
+        #     selected_indices = [index for index, value in enumerate(best_individual) if value == 1]
+        #     x_train = x_train.iloc[:, selected_indices]
+        #     x_test = x_test.iloc[:, selected_indices]
+
+        #     auc5 = run_model(model, x_train, x_test, y_train, y_test)
+        #     smote_ae.append(auc5)
+
+        #     # cluster+ae
+        #     train_file = "{}/{}/6cluster+ae_train_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     test_file = "{}/{}/6cluster+ae_test_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     x_train = pd.read_csv('result/study2/feature/' + train_file, delimiter=',')
+        #     x_test = pd.read_csv('result/study2/feature/' + test_file, delimiter=',')
+
+        #     y_train_file = "{}/{}/6cluster+ae_train_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     y_test_file = "{}/{}/test_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     y_train = pd.read_csv('result/study2/feature/' + y_train_file , delimiter=',')
+        #     y_test = pd.read_csv('result/study2/feature/' + y_test_file , delimiter=',')
+
+        #     X = x_train.values
+        #     y = y_train.values.ravel()
+
+        #     toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_bool, n=X.shape[1])
+        #     toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+        #     best_individual = main()
+
+        #     selected_indices = [index for index, value in enumerate(best_individual) if value == 1]
+        #     x_train = x_train.iloc[:, selected_indices]
+        #     x_test = x_test.iloc[:, selected_indices]
+
+        #     auc6 = run_model(model, x_train, x_test, y_train, y_test)
+        #     cluster_ae.append(auc6)
+
+        #     # smotenn+ae
+        #     train_file = "{}/{}/7smotenn+ae_train_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     test_file = "{}/{}/7smotenn+ae_test_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     x_train = pd.read_csv('result/study2/feature/' + train_file, delimiter=',')
+        #     x_test = pd.read_csv('result/study2/feature/' + test_file, delimiter=',')
+
+        #     y_train_file = "{}/{}/7smotenn+ae_train_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     y_test_file = "{}/{}/test_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+        #     y_train = pd.read_csv('result/study2/feature/' + y_train_file , delimiter=',')
+        #     y_test = pd.read_csv('result/study2/feature/' + y_test_file , delimiter=',')
+
+        #     X = x_train.values
+        #     y = y_train.values.ravel()
+
+        #     toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_bool, n=X.shape[1])
+        #     toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+        #     best_individual = main()
+
+        #     selected_indices = [index for index, value in enumerate(best_individual) if value == 1]
+        #     x_train = x_train.iloc[:, selected_indices]
+        #     x_test = x_test.iloc[:, selected_indices]
+
+        #     auc7 = run_model(model, x_train, x_test, y_train, y_test)
+        #     smotenn_ae.append(auc7)
+
+        # new = [dataset, model, ae_version, 
+        #        round(np.mean(ae), 3), round(np.mean(ae_smote), 3), round(np.mean(ae_cluster), 3), round(np.mean(ae_smotenn), 3),
+        #        round(np.mean(smote_ae), 3), round(np.mean(cluster_ae), 3), round(np.mean(smotenn_ae), 3)]
+
+        # with open('result/study2/ga.csv', 'a', newline='') as csvfile:
+        #     writer = csv.writer(csvfile, delimiter=',')
+        #     writer.writerow(new)
+
+###############################################################################################################
+# fusion
+
+for i, ae_version in enumerate(ae_version):
+    for idx, dataset in enumerate(datasets):
+        f_ae = []
+        f_ae_smote = []; f_ae_cluster = []; f_ae_smotenn = []
+        f_smote_ae = []; f_cluster_ae = []; f_smotenn_ae = []
+
         for times in range(1, 6):
 
-            x_train, x_test, y_train, y_test = process_train_test(dataset, ae_version, times)
+            # ae>fusion
+            train_file = "{}/{}/fusion_ae_train_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            test_file = "{}/{}/fusion_ae_test_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            x_train = pd.read_csv('result/study2/feature/' + train_file, delimiter=',')
+            x_test = pd.read_csv('result/study2/feature/' + test_file, delimiter=',')
+
+            y_train_file = "{}/{}/train_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            y_test_file = "{}/{}/test_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            y_train = pd.read_csv('result/study2/feature/' + y_train_file , delimiter=',')
+            y_test = pd.read_csv('result/study2/feature/' + y_test_file , delimiter=',')
 
             X = x_train.values
             y = y_train.values.ravel()
@@ -129,7 +325,169 @@ for idx, dataset in enumerate(datasets):
             x_test = x_test.iloc[:, selected_indices]
 
             auc1 = run_model(model, x_train, x_test, y_train, y_test)
-            ae.append(auc1)
+            f_ae.append(auc1)
+
+            # ae>fusion+smote
+            train_file = "{}/{}/fusion_ae+smote_train_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            test_file = "{}/{}/fusion_ae_test_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            x_train = pd.read_csv('result/study2/feature/' + train_file, delimiter=',')
+            x_test = pd.read_csv('result/study2/feature/' + test_file, delimiter=',')
+
+            y_train_file = "{}/{}/fusion_ae+smote_train_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            y_test_file = "{}/{}/test_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            y_train = pd.read_csv('result/study2/feature/' + y_train_file , delimiter=',')
+            y_test = pd.read_csv('result/study2/feature/' + y_test_file , delimiter=',')
+
+            X = x_train.values
+            y = y_train.values.ravel()
+
+            toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_bool, n=X.shape[1])
+            toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+            best_individual = main()
+
+            selected_indices = [index for index, value in enumerate(best_individual) if value == 1]
+            x_train = x_train.iloc[:, selected_indices]
+            x_test = x_test.iloc[:, selected_indices]
+
+            auc1 = run_model(model, x_train, x_test, y_train, y_test)
+            f_ae_smote.append(auc1)
+
+            # ae>fusion+cluster
+            train_file = "{}/{}/fusion_ae+cluster_train_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            test_file = "{}/{}/fusion_ae_test_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            x_train = pd.read_csv('result/study2/feature/' + train_file, delimiter=',')
+            x_test = pd.read_csv('result/study2/feature/' + test_file, delimiter=',')
+
+            y_train_file = "{}/{}/fusion_ae+cluster_train_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            y_test_file = "{}/{}/test_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            y_train = pd.read_csv('result/study2/feature/' + y_train_file , delimiter=',')
+            y_test = pd.read_csv('result/study2/feature/' + y_test_file , delimiter=',')
+
+            X = x_train.values
+            y = y_train.values.ravel()
+
+            toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_bool, n=X.shape[1])
+            toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+            best_individual = main()
+
+            selected_indices = [index for index, value in enumerate(best_individual) if value == 1]
+            x_train = x_train.iloc[:, selected_indices]
+            x_test = x_test.iloc[:, selected_indices]
+
+            auc1 = run_model(model, x_train, x_test, y_train, y_test)
+            f_ae_cluster.append(auc1)
+
+            # ae>fusion+smotenn
+            train_file = "{}/{}/fusion_ae+smotenn_train_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            test_file = "{}/{}/fusion_ae_test_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            x_train = pd.read_csv('result/study2/feature/' + train_file, delimiter=',')
+            x_test = pd.read_csv('result/study2/feature/' + test_file, delimiter=',')
+
+            y_train_file = "{}/{}/fusion_ae+smotenn_train_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            y_test_file = "{}/{}/test_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            y_train = pd.read_csv('result/study2/feature/' + y_train_file , delimiter=',')
+            y_test = pd.read_csv('result/study2/feature/' + y_test_file , delimiter=',')
+
+            X = x_train.values
+            y = y_train.values.ravel()
+
+            toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_bool, n=X.shape[1])
+            toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+            best_individual = main()
+
+            selected_indices = [index for index, value in enumerate(best_individual) if value == 1]
+            x_train = x_train.iloc[:, selected_indices]
+            x_test = x_test.iloc[:, selected_indices]
+
+            auc1 = run_model(model, x_train, x_test, y_train, y_test)
+            f_ae_smotenn.append(auc1)
+
+            # smote+ae>fusion
+            train_file = "{}/{}/fusion_smote+ae_train_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            test_file = "{}/{}/fusion_smote+ae_test_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            x_train = pd.read_csv('result/study2/feature/' + train_file, delimiter=',')
+            x_test = pd.read_csv('result/study2/feature/' + test_file, delimiter=',')
+
+            y_train_file = "{}/{}/fusion_smote+ae_train_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            y_test_file = "{}/{}/test_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            y_train = pd.read_csv('result/study2/feature/' + y_train_file , delimiter=',')
+            y_test = pd.read_csv('result/study2/feature/' + y_test_file , delimiter=',')
+
+            X = x_train.values
+            y = y_train.values.ravel()
+
+            toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_bool, n=X.shape[1])
+            toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+            best_individual = main()
+
+            selected_indices = [index for index, value in enumerate(best_individual) if value == 1]
+            x_train = x_train.iloc[:, selected_indices]
+            x_test = x_test.iloc[:, selected_indices]
+
+            auc1 = run_model(model, x_train, x_test, y_train, y_test)
+            f_smote_ae.append(auc1)
+
+            # cluster+ae>fusion
+            train_file = "{}/{}/fusion_cluster+ae_train_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            test_file = "{}/{}/fusion_cluster+ae_test_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            x_train = pd.read_csv('result/study2/feature/' + train_file, delimiter=',')
+            x_test = pd.read_csv('result/study2/feature/' + test_file, delimiter=',')
+
+            y_train_file = "{}/{}/fusion_cluster+ae_train_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            y_test_file = "{}/{}/test_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            y_train = pd.read_csv('result/study2/feature/' + y_train_file , delimiter=',')
+            y_test = pd.read_csv('result/study2/feature/' + y_test_file , delimiter=',')
+
+            X = x_train.values
+            y = y_train.values.ravel()
+
+            toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_bool, n=X.shape[1])
+            toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+            best_individual = main()
+
+            selected_indices = [index for index, value in enumerate(best_individual) if value == 1]
+            x_train = x_train.iloc[:, selected_indices]
+            x_test = x_test.iloc[:, selected_indices]
+
+            auc1 = run_model(model, x_train, x_test, y_train, y_test)
+            f_cluster_ae.append(auc1)
+
+            # smotenn+ae>fusion
+            train_file = "{}/{}/fusion_smotenn+ae_train_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            test_file = "{}/{}/fusion_smotenn+ae_test_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            x_train = pd.read_csv('result/study2/feature/' + train_file, delimiter=',')
+            x_test = pd.read_csv('result/study2/feature/' + test_file, delimiter=',')
+
+            y_train_file = "{}/{}/fusion_smotenn+ae_train_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            y_test_file = "{}/{}/test_ans_{}_{}.csv".format(dataset, autoencoder, ae_version, times)
+            y_train = pd.read_csv('result/study2/feature/' + y_train_file , delimiter=',')
+            y_test = pd.read_csv('result/study2/feature/' + y_test_file , delimiter=',')
+
+            X = x_train.values
+            y = y_train.values.ravel()
+
+            toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_bool, n=X.shape[1])
+            toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+            best_individual = main()
+
+            selected_indices = [index for index, value in enumerate(best_individual) if value == 1]
+            x_train = x_train.iloc[:, selected_indices]
+            x_test = x_test.iloc[:, selected_indices]
+
+            auc1 = run_model(model, x_train, x_test, y_train, y_test)
+            f_smotenn_ae.append(auc1)
 
 
-print(round(np.mean(ae), 4))
+        new = [dataset, model, ae_version, 'fusion',
+               round(np.mean(f_ae), 3), round(np.mean(f_ae_smote), 3), round(np.mean(f_ae_cluster), 3), round(np.mean(f_ae_smotenn), 3),
+               round(np.mean(f_smote_ae), 3), round(np.mean(f_cluster_ae), 3), round(np.mean(f_smotenn_ae), 3)]
+
+        with open('result/study2/ga.csv', 'a', newline='') as csvfile:
+            writer = csv.writer(csvfile, delimiter=',')
+            writer.writerow(new)

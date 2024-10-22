@@ -1,3 +1,5 @@
+from library.common import *
+from library.functions import *
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
@@ -5,16 +7,13 @@ from sklearn.model_selection import cross_val_score
 from deap import base, creator, tools
 import random
 
-# 讀取數據集
-data = pd.read_csv("dataset/breast_cancer.csv")
-
-# 特徵 X 為除了 id 和 diagnosis 的所有列
-X = data.drop(columns=['id', 'diagnosis']).values
-# 標籤 y 為 diagnosis 列，進行二元編碼
-y = data['diagnosis'].map({'M': 1, 'B': 0}).values  # 假設 M 是惡性，B 是良性
+# data = pd.read_csv("dataset/breast_cancer.csv")
+# X = data.drop(columns=['id', 'diagnosis']).values
+# y = data['diagnosis'].map({'M': 1, 'B': 0}).values 
 
 # 定義適應度函數
 def evaluate(individual):
+    global X, y  # 明確宣告使用全域變數
     individual = np.array(individual)
     if sum(individual) == 0:
         return 0,  # 防止所有特徵被選擇為 0
@@ -91,6 +90,50 @@ def main():
     # 返回最佳個體
     best_ind = tools.selBest(population, 1)[0]
     print(f"Best individual is {best_ind}, {best_ind.fitness.values}")
+    return best_ind
 
-if __name__ == "__main__":
-    main()
+
+
+def process_train_test(dataset, ae_version, times):
+
+    train_file = "{}/1ae_train_{}_{}.csv".format(dataset, ae_version, times)
+    test_file = "{}/1ae_test_{}_{}.csv".format(dataset, ae_version, times)
+    x_train = pd.read_csv('result/study2/feature/' + train_file, delimiter=',')
+    x_test = pd.read_csv('result/study2/feature/' + test_file, delimiter=',')
+
+    y_train_file = "{}/train_ans_{}_{}.csv".format(dataset, ae_version, times)
+    y_test_file = "{}/test_ans_{}_{}.csv".format(dataset, ae_version, times)
+    y_train = pd.read_csv('result/study2/feature/' + y_train_file , delimiter=',')
+    y_test = pd.read_csv('result/study2/feature/' + y_test_file , delimiter=',')
+
+    return x_train, x_test, y_train, y_test
+
+
+model = 'svc'
+ae_version = ['ae_210', 'ae_220', 'ae_230', 'ae_240']
+datasets = ['sonar', 'SPECTF', 'MUSK_Clean1']
+
+
+for idx, dataset in enumerate(datasets):
+    for i, ae_version in enumerate(ae_version):
+        ae = []
+        ae_smote = []; ae_cluster = []; ae_smotenn = []
+        smote_ae = []; cluster_ae = []; smotenn_ae = []
+        for times in range(1, 6):
+
+            x_train, x_test, y_train, y_test = process_train_test(dataset, ae_version, times)
+
+            X = x_train.values
+            y = y_train.values.ravel()
+
+            toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_bool, n=X.shape[1])
+            toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+            best_individual = main()
+
+            selected_indices = [index for index, value in enumerate(best_individual) if value == 1]
+            x_train = x_train.iloc[:, selected_indices]
+            x_test = x_test.iloc[:, selected_indices]
+
+            auc1 = run_model(model, x_train, x_test, y_train, y_test)
+            ae.append(auc1)

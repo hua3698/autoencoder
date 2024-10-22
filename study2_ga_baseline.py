@@ -102,7 +102,7 @@ def process_train_test(dataset, ae_version, times):
     return x_train, x_test, y_train, y_test
 
 
-datasets = ['SPECTF', 'sonar', 'MUSK_Clean1']
+datasets = ['segmentationData', 'madelon', 'secom', 'colon', 'leukemia', 'SMK_CAN_187']
 
 for idx, dataset in enumerate(datasets):
 
