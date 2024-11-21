@@ -1,0 +1,15 @@
+result/
+wu/
+dataset/bank/
+dataset/keel/
+dataset/study2/多分類/
+dataset/study2/feature
+dataset/study2/OVA_Breast.csv
+dataset/study2/AP_Colon_Kidney.csv
+dataset/study2/SMK_CAN_187.csv
+dataset/study2/Dexter.csv
+dataset/study2/kits-subset.csv
+dataset/study2/REJAFADA.csv
+dataset/study2/PCMAC.csv
+__pycache__/
+library/__pycache__/
